@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Message Cleaner</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+        textarea { width: 100%; height: 180px; margin-top: 10px; }
+        button { padding: 10px 20px; margin-top: 20px; font-size: 16px; }
+        #output { margin-top: 20px; white-space: pre-wrap; background: #f3f3f3; padding: 15px; }
+    </style>
+</head>
+<body>
+
+<h2>Message Cleaner Tool</h2>
+<p>Paste the messy message below and click "Clean Message".</p>
+
+<textarea id="input"></textarea>
+<button onclick="clean()">Clean Message</button>
+
+<h3>Clean Output:</h3>
+<div id="output"></div>
+
+<script>
+function extractRealMessage(raw) {
+    if (!raw) return "";
+
+    let text = raw;
+
+    text = text.replace(/\{color:[^}]+\}/g, "");
+    text = text.replace(/\{color\}/g, "");
+    text = text.replace(/\{adf\}[\s\S]*?\{adf\}/g, "");
+    text = text.replace(/\{[\s\S]*?\}/g, "");
+    text = text.replace(/\\!/g, "!");
+    text = text.replace(/\\n/g, "\n");
+    text = text.replace(/[*_`]/g, "");
+    text = text.replace(/\s{2,}/g, " ").trim();
+    text = text.replace(/[^a-zA-Z0-9À-ž\s\.,!?\-+]/g, "");
+
+    return text.trim();
+}
+
+function clean() {
+    const input = document.getElementById("input").value;
+    const output = extractRealMessage(input);
+    document.getElementById("output").textContent = output;
+}
+</script>
+
+</body>
+</html>
