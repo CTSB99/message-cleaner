@@ -22,10 +22,7 @@
         <div id="output"></div>
 
         <script>
-        function extractRealMessage(raw) {
-            if (!raw) return "";
-
-            let text = raw;
+        function extractRealMessage(text) {
 
             text = text.replace(/\{color:[^}]+\}/g, "");
             text = text.replace(/\{color\}/g, "");
@@ -47,5 +44,5 @@
         }
         </script>
     </body>
-    
+
 </html>
